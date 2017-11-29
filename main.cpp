@@ -11,10 +11,16 @@ struct Func {
                 double gam = 0.;
                 double del = 5.;
                 
+              
                 
-		y(0) = x(1);
-                y(1) = (1./del) * (c * x(0) - x(1) * (x(1) - a) * (1 - x(1)) + x(2));
-		y(2) = .01 * (1./c) * ( x(1) - gam * x(2));
+//		y(0) = x(1);
+//                y(1) = (1./del) * (c * x(0) - x(1) * (x(1) - a) * (1 - x(1)) + x(2));
+//		y(2) = .01 * (1./c) * ( x(1) - gam * x(2));
+                
+                // fix w = 0.0
+                y(0) = x(1);
+                y(1) = (1./del) * (c * x(1) - x(0) * (x(0) - a) * (1 - x(0)) + 0.);
+		y(2) = .001 * c * (x(0) - gam * 0.);
 
 		return y;
 	}
@@ -54,7 +60,7 @@ int main()
 	std::cout.precision(17);
 
 	I.resize(3);
-	for (i=0; i<I.size(); i++) I(i) = itv(-1., 1.);
+	for (i=0; i<I.size(); i++) I(i) = itv(-100., 100.);
 
 	kv::allsol(Func(), I);
 
